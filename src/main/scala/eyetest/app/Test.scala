@@ -31,7 +31,7 @@ class Test(username: String, initialFont: Int) extends Frame with Process {
 
   implicit script vkey(??k: Key.Value) = vkey2: this, ??k
                                          {throw new Exception("You haven't checked synthetic source of k.toString!")}
-                                         success: k
+                                         success: k.toString
 
   script..
     live = mainTestProcess || cancelBtn failure: "Test was cancelled"
