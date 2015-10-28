@@ -41,7 +41,7 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                                          success: k.toString
 
   script..
-    live = mainTestProcess || cancelBtn failure: "Test was cancelled"
+    live = mainTestProcess || cancelBtn
 
     mainTestProcess = var rightEye: Double = 0
                       var leftEye : Double = 0
