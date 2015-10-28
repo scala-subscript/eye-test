@@ -1,5 +1,7 @@
 package eyetest.app
 
+import subscript.language
+
 import java.awt.{Point, Dimension}
 
 import scala.swing._
@@ -7,8 +9,11 @@ import scala.swing.BorderPanel.Position._
 import scala.swing.event._
 import subscript.swing.Scripts._
 
+import eyetest.util._
+import eyetest.util.Predef._
 
-class Test(username: String, initialFont: Int) extends Frame with Process {
+
+class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends Frame with Process {
 
   title       = s"Test for $username"
   location    = new Point    (300, 100)
@@ -36,8 +41,8 @@ class Test(username: String, initialFont: Int) extends Frame with Process {
   script..
     live = mainTestProcess || cancelBtn failure: "Test was cancelled"
 
-    mainTestProcess = var rightEye: Double
-                      var leftEye : Double
+    mainTestProcess = var rightEye: Double = 0
+                      var leftEye : Double = 0
                       eyeTest("Right") ~~(result: Double)~~> let rightEye = result
                       eyeTest("Left" ) ~~(result: Double)~~> let leftEye  = result
                       success: (rightEye, leftEye)
@@ -58,20 +63,21 @@ class Test(username: String, initialFont: Int) extends Frame with Process {
              var correctGuesses: List[Int] = Nil
              [
                while(correctGuesses.size < maxCorrectGuesses) 
-               displayLetters(fontSize) ~~(result: Boolean)~~> if result then [
+               displayLetters(fontSize) ~~(result: Boolean)~~> [if result then [
                  let correctGuesses ::= fontSize
                  let fontSize -= 1
-               ] else let fontSize += 1
+               ] else let fontSize += 1]
              ]
 
-             success: correctGuesses.average
+             success: (correctGuesses.sum / correctGuesses.size)
              
 
-    displayLetters(font: Int) = testArea.font = new Font("Ariel", java.awt.Font.ITALIC, font)
-                                textArea.text = scala.util.Random.alphanumeric.filter(c => c >= 'A' && c <= 'Z').take(6).mkString(" ")
+    displayLetters(font: Int) = let testArea.font = new Font("Ariel", java.awt.Font.ITALIC, font)
+                                var sample = scala.util.Random.alphanumeric.filter(c => c >= 'A' && c <= 'Z').take(6)
+                                let testArea.text = sample.mkString(" ")
                                 var answer = ""
-                                [while(answer.size < textArea.text.size) Key.Accept ~~(k: Key.Value)~~> let answer += k.toString]
-                                if textArea.text == answer then success: true else success: false
+                                [while(answer.size < sample.size) Key.Accept ~~(k: Key.Value)~~> let answer += k.toString]
+                                if sample.mkString == answer then success: true else success: false
 
 
 }

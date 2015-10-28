@@ -7,7 +7,7 @@ import eyetest.app._
 
 object Main {
   def main(args: Array[String]) {
-    val l = new Test {
+    val l = new Test("Me", 20, 5) {
       override def closeOperation() {System.exit(0)}
     }
     l.visible = true
