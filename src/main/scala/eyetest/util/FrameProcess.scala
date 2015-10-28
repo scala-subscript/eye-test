@@ -5,18 +5,21 @@ import subscript.language
 import eyetest.util.Predef._
 
 
-trait FrameProcess extends SSProcess {this: scala.swing.Frame =>
+trait FrameProcess extends scala.swing.Frame with SSProcess {
 
-  override script lifecycle = let visible = true
-                              var result: Any = null
-                              var exception: Throwable = null
+  val closed = new Trigger
 
-                              super.lifecycle ~~(r: Any      )~~> let result    = r
-                                            +~/~(t: Throwable)~~> let exception = t
+  override def closeOperation() {
+    closed.trigger
+  }
 
-                              close()
 
-                              if result != null then success: result
-                              else failure: exception
+  override script lifecycle = workflow / closed
+
+  script workflow = let visible = true
+                    var result: Any = null
+                    super.lifecycle ~~(r: Any)~~> let result = r
+                    close()
+                    success: result
 
 }

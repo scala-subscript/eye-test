@@ -20,13 +20,12 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
   minimumSize = new Dimension(350, 350)
 
 
-  val testArea = new Label("Hello World!") {
-    focusable = true
-  }
+  val testArea    = new Label("Hello World!")
+  val answerField = new TextField("")
+  val cancelBtn   = new Button("Cancel")
 
-  val cancelBtn = new Button("Cancel")
-
-  val controls = new GridPanel(1, 1) {
+  val controls = new GridPanel(2, 1) {
+    contents += answerField
     contents += cancelBtn
   }
 
@@ -36,9 +35,9 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
     layout(controls) = South
   }
 
+  listenTo(answerField.keys)
+
   implicit script vkey(??k: Key.Value) = vkey2: this, ??k
-                                         {throw new Exception("You haven't checked synthetic source of k.toString!")}
-                                         success: k.toString
 
   script..
     live = mainTestProcess || cancelBtn
@@ -49,8 +48,9 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                       eyeTest("Left" ) ~~(result: Double)~~> let leftEye  = result
                       success: (rightEye, leftEye)
 
-    eyeTest(eyeName: String) = let testArea.text = s"PLease sit 50cm from the screen and look with your $eyeName eye. Press Space when ready."
-                               Key.Space
+    eyeTest(eyeName: String) = let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
+                               sleep: 250  // So that if the user already holds Enter after the previous checkup, he has time to release it
+                               Key.Enter
                                doTest ~~(result: Double)~~> success: result
 
     doTest = var fontSize = initialFont
@@ -71,14 +71,16 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                ] else let fontSize += 1]
              ]
 
-             success: (correctGuesses.sum / correctGuesses.size)
+             success: (correctGuesses.sum / correctGuesses.size.toDouble)
              
 
-    displayLetters(font: Int) = let testArea.font = new Font("Ariel", java.awt.Font.ITALIC, font)
+    displayLetters(font: Int) = let answerField.text = ""
+                                let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, font)
                                 var sample = scala.util.Random.alphanumeric.filter(c => c >= 'A' && c <= 'Z').take(6)
                                 let testArea.text = sample.mkString(" ")
-                                var answer = ""
-                                [while(answer.size < sample.size) Key.Accept ~~(k: Key.Value)~~> let answer += k.toString]
+                                Key.Enter
+                                var answer = answerField.text
+                                println(answer + " == " + sample.mkString)
                                 if sample.mkString == answer then success: true else success: false
 
 

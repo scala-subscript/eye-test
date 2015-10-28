@@ -10,6 +10,9 @@ object Predef {
     failure(msg: String   ): Any = {!throw new RuntimeException(msg)!}
     failure(t  : Throwable): Any = {!throw t!}
 
-  implicit script process2script(p: SSProcess) = p.lifecycle
+    sleep(t: Long) = {* Thread.sleep(t) *}
 
+  implicit script..
+    process2script(p: SSProcess) = p.lifecycle
+    trigger2script(t: Trigger  ) = @{t.addListener {() => there.codeExecutor.executeAA}}: {. .}
 }
