@@ -12,7 +12,6 @@ object Predef {
 
     sleep(t: Long) = {* Thread.sleep(t) *}
 
-  implicit script..
-    process2script(p: SSProcess) = p.lifecycle
-    trigger2script(t: Trigger  ) = @{t.addListener {() => there.codeExecutor.executeAA}}: {. .}
+  implicit script process2script(p: SSProcess) = p.lifecycle
+
 }
