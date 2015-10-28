@@ -1,15 +1,14 @@
 package eyetest
 
+import scala.language.implicitConversions
 import subscript.language
 
 import eyetest.app._
-// import eyetest.util._
+import eyetest.util._
+import eyetest.util.Predef._
 
-object Main {
-  def main(args: Array[String]) {
-    val l = new Test("Me", 20, 5) {
-      override def closeOperation() {System.exit(0)}
-    }
-    l.visible = true
-  }
+object Main extends SubScriptApplication {
+
+  script live = (new Test("Me", 20, 5))
+
 }

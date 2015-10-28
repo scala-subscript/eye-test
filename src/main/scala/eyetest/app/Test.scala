@@ -13,14 +13,16 @@ import eyetest.util._
 import eyetest.util.Predef._
 
 
-class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends Frame with Process {
+class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends Frame with FrameProcess {
 
   title       = s"Test for $username"
   location    = new Point    (300, 100)
   minimumSize = new Dimension(350, 350)
 
 
-  val testArea = new Label("Hello World!")
+  val testArea = new Label("Hello World!") {
+    focusable = true
+  }
 
   val cancelBtn = new Button("Cancel")
 
