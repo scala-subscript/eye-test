@@ -17,7 +17,7 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
 
   title       = s"Test for $username"
   location    = new Point    (300, 100)
-  minimumSize = new Dimension(350, 350)
+  minimumSize = new Dimension(550, 350)
 
 
   val testArea    = new Label("Hello World!")
@@ -47,7 +47,8 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                       eyeTest("Left" ) ~~(result: Double)~~> let leftEye  = result
                       success: (rightEye, leftEye)
 
-    eyeTest(eyeName: String) = let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
+    eyeTest(eyeName: String) = let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, 20)
+                               let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
                                sleep: 250  // So that if the user already holds Enter after the previous checkup, he has time to release it
                                Key.Enter
                                doTest ~~(result: Double)~~> success: result
