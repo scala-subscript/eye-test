@@ -9,6 +9,6 @@ import eyetest.util.Predef._
 
 object Main extends SubScriptApplication {
 
-  script live = (new Test("Me", 20, 5))
+  script live = (new Login)
 
 }

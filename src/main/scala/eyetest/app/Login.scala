@@ -1,12 +1,16 @@
 package eyetest.app
 
+import subscript.language
+
 import java.awt.Point
 
 import scala.swing._
 import scala.swing.BorderPanel.Position._
 
+import eyetest.util._
 
-class Login extends Frame {
+
+class Login extends Frame with FrameProcess {
 
   title = "Eye test"
   location = new Point(300, 300)
@@ -29,5 +33,7 @@ class Login extends Frame {
     layout(userComboBox) = Center
     layout(controls)     = South
   }
+
+  script live = {..}
 
 }

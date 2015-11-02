@@ -37,7 +37,6 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
 
   listenTo(answerField.keys)
 
-  implicit script vkey(??k: Key.Value) = vkey2: this, ??k
 
   script..
     live = mainTestProcess || cancelBtn
