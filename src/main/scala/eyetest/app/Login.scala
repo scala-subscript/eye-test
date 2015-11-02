@@ -56,7 +56,8 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     controls = controlsIter ...
 
-    controlsIter = testBtn doTest
+    controlsIter = + [testBtn doTest]
+                     [registerBtn doRegister]
 
     doTest = var currentUser = userComboBox.peer.getSelectedItem.toString
              let visible = false
@@ -67,5 +68,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
              ]
 
              let visible = true
+
+    doRegister = println: "I do something"
 
 }
