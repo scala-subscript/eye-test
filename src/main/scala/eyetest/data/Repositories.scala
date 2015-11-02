@@ -4,4 +4,6 @@ trait Repositories {
 
   def user: UserRepo
 
+  def score: ScoreRepo
+
 }

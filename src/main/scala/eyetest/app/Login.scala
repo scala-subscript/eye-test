@@ -3,10 +3,14 @@ package eyetest.app
 import subscript.language
 import scala.language.implicitConversions
 
+import java.util.Date
+
 import java.awt.Point
 
 import scala.swing._
 import scala.swing.BorderPanel.Position._
+
+import subscript.swing.Scripts._
 
 import eyetest.data._
 import eyetest.util._
@@ -19,9 +23,10 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
   location = new Point(300, 300)
 
 
-  val userComboBox = new ComboBox[String](Nil)
+  var userComboBox = new ComboBox[String](Nil)
   def setUsers(users: Seq[String]) {
-    mainPanel.layout(new ComboBox(users)) = Center
+    userComboBox = new ComboBox(users)
+    mainPanel.layout(userComboBox) = Center
     peer.repaint()
     peer.revalidate()
   }
@@ -49,7 +54,18 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     init = repositories.user ~~(users: Seq[String])~~> setUsers: users
 
-    controls = {..}
+    controls = controlsIter ...
 
+    controlsIter = testBtn doTest
+
+    doTest = var currentUser = userComboBox.peer.getSelectedItem.toString
+             let visible = false
+
+             {!userComboBox.peer.getSelectedItem.toString!} ~~(currentUser: String)~~> [
+               [repositories.score.lastAvg: currentUser ~~(score: Double)~~> (new Test(currentUser, score.toInt, 5))]
+               ~~(result: (Double, Double))~~> repositories.score.write: currentUser, result, new Date
+             ]
+
+             let visible = true
 
 }
