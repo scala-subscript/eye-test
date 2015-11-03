@@ -12,7 +12,14 @@ import eyetest.util.Predef._
 
 object Main extends SubScriptApplication {
 
-  script live = (new Login(DummyRepositories))
+  script..
+    live = initGui
+           (new WaitScreen) || initData
+           (new Login(DummyRepositories))
+
+    initGui = javax.swing.UIManager.setLookAndFeel: "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
+    initData = sleep: 1000
+
 
 }
 
