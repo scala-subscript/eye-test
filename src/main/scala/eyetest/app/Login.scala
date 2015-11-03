@@ -4,6 +4,7 @@ import subscript.language
 import scala.language.implicitConversions
 
 import java.util.Date
+import java.io.File
 
 import java.awt.Point
 
@@ -15,6 +16,8 @@ import subscript.swing.Scripts._
 import eyetest.data._
 import eyetest.util._
 import eyetest.util.Predef._
+
+import org.apache.commons.io.FileUtils
 
 
 class Login(repositories: Repositories) extends Frame with FrameProcess {
@@ -49,6 +52,9 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
   contents = mainPanel
 
 
+  def getCurrentUser = userComboBox.peer.getSelectedItem.toString
+
+
   script..
     live = init ; controls
 
@@ -63,21 +69,29 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                      [registerBtn doRegister  ]
                      [serializeBtn doSerialize]
 
-    doTest = var currentUser = userComboBox.peer.getSelectedItem.toString
-             let visible = false
+    doTest = let visible = false
 
-             {!userComboBox.peer.getSelectedItem.toString!} ~~(currentUser: String)~~> [
+             {!getCurrentUser!} ~~(currentUser: String)~~> [
                [repositories.score.lastAvg: currentUser ~~(score: Double)~~> (new Test(currentUser, score.toInt, 5))]
                ~~(result: (Double, Double))~~> repositories.score.write: currentUser, result, new Date
              ]
 
              let visible = true
 
+
     doRegister = let visible = false
                  (new Register) ~~(name: String)~~> repositories.user.write: name
                  initUsers
                  let visible = true
 
-    doSerialize = println: "I serialize things"
+    doSerialize = selectFile ~~(file: File)~~> [repositories.score.scoresOf: getCurrentUser ~~(scores: Seq[(Date, Double, Double)])~~> [
+      val csv = scores.map {case (date, right, left) =>
+        val formated = new java.text.SimpleDateFormat("dd.MM.yyyy").format(date)   // SimpleDateFormat to be abstracted to a separate var as soon as local vars can be used from other local vars' definitions
+        s"$formated,$right,$left"}.mkString("\n")
+      FileUtils.write: file, csv
+    ]]
+
+    selectFile = val chooser = new FileChooser
+                 if chooser.showSaveDialog(null) == FileChooser.Result.Approve then success: chooser.selectedFile
 
 }
