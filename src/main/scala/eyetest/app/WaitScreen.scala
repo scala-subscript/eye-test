@@ -16,7 +16,7 @@ import eyetest.util.Predef._
 
 
 class WaitScreen extends Frame with FrameProcess {  
-  title       = "Registration"
+  peer.setUndecorated(true)
   location    = new Point(300, 300)
   minimumSize = new Dimension(350, 0)
 
