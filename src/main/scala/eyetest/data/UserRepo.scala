@@ -10,5 +10,7 @@ trait UserRepo extends SSProcess {
   script..
     all: Any
 
+    write(username: String): Any
+
     live = all
 }

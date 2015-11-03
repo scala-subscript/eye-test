@@ -20,6 +20,7 @@ object DummyRepositories extends Repositories {
 
   def user = new UserRepo {script..
     all = success: Seq("Jack", "John", "Ann")
+    write(username: String) = println("Registered " + username)
   }
 
   def score = new ScoreRepo {script..

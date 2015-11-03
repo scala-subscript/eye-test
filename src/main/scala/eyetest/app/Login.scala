@@ -52,7 +52,10 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
   script..
     live = init ; controls
 
-    init = repositories.user ~~(users: Seq[String])~~> setUsers: users
+
+    init = initUsers
+    initUsers = repositories.user ~~(users: Seq[String])~~> setUsers: users
+
 
     controls = controlsIter ...
 
@@ -70,7 +73,10 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
              let visible = true
 
-    doRegister = println: "I register users"
+    doRegister = let visible = false
+                 (new Register) ~~(name: String)~~> repositories.user.write: name
+                 initUsers
+                 let visible = true
 
     doSerialize = println: "I serialize things"
 
