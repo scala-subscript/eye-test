@@ -19,9 +19,9 @@ trait ScoreRepo {
   script..
     scoresOf(user: String): Any
 
-    last(user: String) = scoresOf: user ~~(scores: Seq[Score])~~> success: scores.last
+    last(user: String) = scoresOf: user ~~(scores: Seq[Score])~~> success: scores.lastOption
 
-    lastAvg(user: String) = last: user ~~(score: Score)~~> success((score._1 + score._2) / 2)
+    lastAvg(user: String) = last: user ~~(score: Option[Score])~~> success(score.map(s => (s._1 + s._2) / 2))
 
     write(user: String, score: (Double, Double)): Any
 }

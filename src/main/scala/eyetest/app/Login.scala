@@ -72,7 +72,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
     doTest = let visible = false
 
              {!getCurrentUser!} ~~(currentUser: String)~~> [
-               [repositories.score.lastAvg: currentUser ~~(score: Double)~~> (new Test(currentUser, score.toInt, 5))]
+               [repositories.score.lastAvg: currentUser ~~(score: Option[Double])~~> (new Test(currentUser, score.map(_.toInt).getOrElse(20), 5))]
                ~~(result: (Double, Double))~~> repositories.score.write: currentUser, result
              ]
 
