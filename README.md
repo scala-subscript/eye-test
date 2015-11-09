@@ -44,3 +44,6 @@ Here follows the conceptual description of the test procedure used in the applic
 3. Select where to save your scores, save them to the file with a `*.csv` extension, for example `my_scores.csv`.
 4. Open the file with a table processor, like Microsoft Exel. If asked what the values are separated by, specify only comma "`,`" symbol.
 5. The table contains your scores for each eye and the dates where the tests were taken. A good idea is to use your table processor's built-in functionalities to build a plot of the dynamics of your eyesight, so that you know whether you need to change your working habits.
+
+# Issues
+Issue tracker with all known bugs is located [here](https://github.com/scala-subscript/eye-test/issues).
