@@ -1,9 +1,9 @@
 package eyetest.data
+package derby
 
 import java.sql._
-import java.io.Closeable
 
-class DerbyRepo(dbname: String) extends Closeable {
+class DerbyRepo(dbname: String) extends Repositories {
   
   Class.forName("org.apache.derby.jdbc.EmbeddedDriver")
   val conn = DriverManager.getConnection(s"jdbc:derby:$dbname;create=true")
@@ -37,7 +37,10 @@ class DerbyRepo(dbname: String) extends Closeable {
   }
 
   override def close() {
-    conn.close()
+    conn .close()
   }
+
+  override def user  = new DerbyUserRepo (conn)
+  override def score = ??? //new DerbyScoreRepo(conn)
 
 }

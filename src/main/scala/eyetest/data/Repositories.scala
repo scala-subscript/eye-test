@@ -1,6 +1,8 @@
 package eyetest.data
 
-trait Repositories {
+import java.io.Closeable
+
+trait Repositories extends Closeable {
 
   def user: UserRepo
 

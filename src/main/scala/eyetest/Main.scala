@@ -35,4 +35,6 @@ object DummyRepositories extends Repositories {
     write(user: String, score: (Double, Double), date: Date) = println("Writing for " + user + " with score " + score + " on " + date)
   }
 
+  override def close = ()
+
 }
