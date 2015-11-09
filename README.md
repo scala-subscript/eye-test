@@ -1,8 +1,7 @@
+# Introduction
+
 This is an application for the eyesight checkup. It is written with [SubScript](https://github.com/scala-subscript/subscript).
 
-# Principles of operation
-
-## Introduction
 The application is designed to register the dynamics in your vision acuty. Therefore, it is supposed to be used during an extended period of time, regularly and possibly in same conditions during every examination.
 
 The application aims to measure the smallest font you can read from a distance of 50cm.
