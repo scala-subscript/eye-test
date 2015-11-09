@@ -9,5 +9,5 @@ SubscriptSbt.projectSettings
 initialCommands := """
 System.setSecurityManager(null)
 val repo = new eyetest.data.derby.DerbyRepo("eyetest-db")
-def res(s: subscript.vm.Script[_]): util.Try[_] = subscript.DSL._execute(s).$
+def res[T](s: subscript.vm.ScriptNode[T]): util.Try[T] = subscript.DSL._execute(s).$
 """

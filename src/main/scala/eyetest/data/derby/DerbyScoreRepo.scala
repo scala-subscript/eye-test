@@ -9,10 +9,10 @@ import java.sql._
 class DerbyScoreRepo(val conn: Connection) extends ScoreRepo {
 
   val scoresOfStmt =
-    "SELECT * FROM SCORES WHERE USERNAME = ?"
+    s"SELECT * FROM SCORES WHERE USERNAME = ? ORDER BY ${Col.DATE} DESC"
 
   val writeStmt =
-    "INSERT INTO SCORES (${Col.USERNAME}, ${Col.RIGHT_EYE}, ${Col.LEFT_EYE}) VALUES (?, ?, ?)"
+    s"INSERT INTO SCORES (${Col.USERNAME}, ${Col.RIGHT_EYE}, ${Col.LEFT_EYE}) VALUES (?, ?, ?)"
 
   override script..
     scoresOf(user: String) = val pstmt = conn.prepareStatement(scoresOfStmt)
