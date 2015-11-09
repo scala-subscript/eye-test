@@ -9,9 +9,9 @@ The application aims to measure the smallest font you can read from a distance o
 ## Testing procedure
 Here follows the conceptual description of the test procedure used in the application:
 
-1. Sit 50cm from your computer screen
+1. Sit at 50cm from your computer screen.
 2. Your eyes will be tested in order: right eye, then left eye. You need to cover the opposite eye with something while you're taking the test.
-3. A sequence of 6 uppercase letters will appear on the screen, the font of which is 20. When you take the test next time, the font will be set to the one you scored during your previous test.
+3. A sequence of 6 uppercase letters will appear on the screen, the font of which is 20 Ariel. When you take the test next time, the font will be set to the one you scored during your previous test.
 4. Your goal is to type the letters into the text box properly. Once you've done, press **Enter**.
 5. Another sequence of 6 lettes will appear. If you've guessed the previous one correctly, its font will be one unit smaller then the previous one's. Otherwise, the font will increase by one unit.
 6. This will continue while there's no dynamics in your guesses. That is, while you keep getting it right, or keep getting it wrong all the time.
@@ -41,7 +41,7 @@ Here follows the conceptual description of the test procedure used in the applic
 1. From the *Login* screen, select your user.
 2. Press **Export to CSV** button.
 3. Select where to save your scores, save them to the file with a `*.csv` extension, for example `my_scores.csv`.
-4. Open the file with a table processor, like Microsoft Exel. If asked what the values are separated by, specify only comma "`,`" symbol.
+4. Open the file with a table processor, like Microsoft Excel. If asked what the values are separated by, specify only the comma "`,`" symbol.
 5. The table contains your scores for each eye and the dates where the tests were taken. A good idea is to use your table processor's built-in functionalities to build a plot of the dynamics of your eyesight, so that you know whether you need to change your working habits.
 
 # Issues
