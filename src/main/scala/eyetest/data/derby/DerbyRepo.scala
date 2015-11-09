@@ -25,7 +25,7 @@ class DerbyRepo(dbname: String) extends Repositories {
     
       stmt.executeUpdate {"""
         CREATE TABLE SCORES (
-        ID INT NOT NULL PRIMARY KEY
+        ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT
       , USERNAME VARCHAR(255) NOT NULL
       , TEST_DATE TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       , RIGHT_EYE DOUBLE NOT NULL
@@ -41,6 +41,6 @@ class DerbyRepo(dbname: String) extends Repositories {
   }
 
   override def user  = new DerbyUserRepo (conn)
-  override def score = ??? //new DerbyScoreRepo(conn)
+  override def score = new DerbyScoreRepo(conn)
 
 }

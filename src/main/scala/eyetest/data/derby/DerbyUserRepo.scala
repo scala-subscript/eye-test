@@ -24,8 +24,8 @@ class DerbyUserRepo(val conn: Connection) extends UserRepo {
                               {!
                                 pstmt.setString(1, username)
                                 pstmt.executeUpdate()
-                                pstmt.close()
                               !}
+                              let pstmt.close()
 
 
 }

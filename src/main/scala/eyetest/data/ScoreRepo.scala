@@ -9,12 +9,19 @@ import eyetest.util.Predef._
 
 trait ScoreRepo {
 
+  object Col {
+    val RIGHT_EYE = "RIGHT_EYE"
+    val LEFT_EYE  = "LEFT_EYE"
+    val USERNAME  = "USERNAME"
+    val DATE      = "TEST_DATE" 
+  }
+
   script..
     scoresOf(user: String): Any
 
-    last(user: String) = scoresOf: user ~~(scores: Seq[(Date, Double, Double)])~~> success: scores.last
+    last(user: String) = scoresOf: user ~~(scores: Seq[Score])~~> success: scores.last
 
-    lastAvg(user: String) = last: user ~~(score: (Date, Double, Double))~~> success((score._2 + score._3) / 2)
+    lastAvg(user: String) = last: user ~~(score: Score)~~> success((score._1 + score._2) / 2)
 
-    write(user: String, score: (Double, Double), date: Date): Any
+    write(user: String, score: (Double, Double)): Any
 }

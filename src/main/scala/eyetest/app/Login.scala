@@ -73,7 +73,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
              {!getCurrentUser!} ~~(currentUser: String)~~> [
                [repositories.score.lastAvg: currentUser ~~(score: Double)~~> (new Test(currentUser, score.toInt, 5))]
-               ~~(result: (Double, Double))~~> repositories.score.write: currentUser, result, new Date
+               ~~(result: (Double, Double))~~> repositories.score.write: currentUser, result
              ]
 
              let visible = true
@@ -84,8 +84,8 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                  initUsers
                  let visible = true
 
-    doSerialize = selectFile ~~(file: File)~~> [repositories.score.scoresOf: getCurrentUser ~~(scores: Seq[(Date, Double, Double)])~~> [
-      val csv = "Date,Right Eye,Left Eye\n" + scores.map {case (date, right, left) =>
+    doSerialize = selectFile ~~(file: File)~~> [repositories.score.scoresOf: getCurrentUser ~~(scores: Seq[Score])~~> [
+      val csv = "Date,Right Eye,Left Eye\n" + scores.map {case (right, left, date) =>
         val formated = new java.text.SimpleDateFormat("dd.MM.yyyy").format(date)   // SimpleDateFormat to be abstracted to a separate var as soon as local vars can be used from other local vars' definitions
         s"$formated,$right,$left"}.mkString("\n")
       FileUtils.write: file, csv
