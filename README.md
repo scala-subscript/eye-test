@@ -1,4 +1,4 @@
-This is an application for the eyesight checkup. It is written with [SubScript]().
+This is an application for the eyesight checkup. It is written with [SubScript](https://github.com/scala-subscript/subscript).
 
 # Principles of operation
 
@@ -34,7 +34,7 @@ Here follows the conceptual description of the test procedure used in the applic
 ## Test your eyesight
 1. From the *Login* screen, select your user.
 2. Press **Test** button.
-3. Go through the test procedure as described in the [Testing procedure]() section above.
+3. Go through the test procedure as described in the [Testing procedure](https://github.com/scala-subscript/eye-test#testing-procedure) section above.
 4. Your score will automatically be recorded into the local database.
 5. At the end of the test, a form with your results will appear. Close it after reading.
 
