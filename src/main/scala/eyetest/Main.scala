@@ -15,13 +15,13 @@ import eyetest.data.derby._
 object Main extends SubScriptApplication {
 
   script..
-    live = (new Result(10.5, 12.3))//var repos: Repositories = null
+    live = var repos: Repositories = null
            
-           // initGui
-           // (new WaitScreen) || initData(?repos)
-           // (new Login(repos))
+           initGui
+           (new WaitScreen) || initData(?repos)
+           (new Login(repos))
 
-           // let repos.close()
+           let repos.close()
 
     initGui = javax.swing.UIManager.setLookAndFeel: "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
 

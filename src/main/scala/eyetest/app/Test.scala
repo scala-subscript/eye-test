@@ -80,7 +80,7 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                                 let testArea.text = sample.mkString(" ")
                                 Key.Enter
                                 var answer = answerField.text
-                                println(answer + " == " + sample.mkString)
+                                println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + font)
                                 if sample.mkString == answer then success: true else success: false
 
 
