@@ -23,7 +23,9 @@ trait FrameProcess extends scala.swing.Frame with SSProcess {
 
   script workflow = let visible = true
                     var result: Any = null
-                    super.lifecycle ~~(r: Any)~~> let result = r
+                    super.lifecycle ~~(r: Any      )~~> let result = r
+                                  +~/~(x: Throwable)~~> failure: x
+                                  +~/~(null        )~~> [+]
                     success: result
 
 }
