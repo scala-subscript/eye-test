@@ -6,6 +6,9 @@ trait Strategy {
   private var _guesses: List[(Int, Boolean)] = Nil
   def guesses = _guesses
 
+  /** A step of the font change during the calibration */
+  def calibrationStep = 1
+
   /** Initial font to be used for the test */
   def initialFont(previousTestResult: Double): Int
 
@@ -26,4 +29,5 @@ trait Strategy {
 
 object Strategy {
   def simple(maxCorrectGuesses: Int = 5) = new SimpleStrategy(maxCorrectGuesses)
+  def batch (incrementStep: Int = 10, successGuessCount: Int = 5) = new BatchStrategy(incrementStep, successGuessCount)
 }

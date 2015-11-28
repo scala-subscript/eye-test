@@ -9,7 +9,9 @@ class BatchStrategy(_incrementStep: Int, val successGuessCount: Int) extends Str
   // Must be at least successGuessCount, so that the user doesn't enter
   // an infinite loop where he can't score the required number
   // of consequitive correct guesses.
-  def incrementStep = math.max(_incrementStep, successGuessCount)
+  val incrementStep = math.max(_incrementStep, successGuessCount)
+
+  override val calibrationStep = incrementStep
 
   /**
    * Increments the previous font by incrementStep so that
@@ -27,7 +29,7 @@ class BatchStrategy(_incrementStep: Int, val successGuessCount: Int) extends Str
     val validity = guesses.map(_._2)
     validity.headOption.map {last =>
       val previous = validity.drop(1).take(successGuessCount)
-      !previous.isEmpty && previous.forall(x => x)
+      !last && previous.size >= successGuessCount && previous.forall(x => x)
     }.getOrElse(false)
   }
 

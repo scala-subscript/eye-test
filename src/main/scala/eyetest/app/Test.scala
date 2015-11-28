@@ -57,7 +57,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
                                doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft) ~~(result: Double)~~> success: result
 
     doTest(previousFont: Double) =
-      let strategy = Strategy.simple()
+      let strategy = Strategy.batch()
       var fontSize = strategy.initialFont(previousFont)
 
       var previousResult = false
@@ -70,7 +70,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
       // Calibrating: get fontSize to the point where the user has hard times recognizing it
       [
         while(previousResult == currentResult)
-        if previousResult then let fontSize -= 1 else let fontSize += 1
+        if previousResult then let fontSize -= strategy.calibrationStep else let fontSize += strategy.calibrationStep
         displayLetters(fontSize) ~~(result: Boolean)~~> [
           let previousResult = currentResult
           let currentResult  = result
