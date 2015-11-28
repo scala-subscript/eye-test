@@ -56,10 +56,19 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
     doTest = var fontSize = initialFont
 
              var previousResult = false
-             displayLetters(fontSize) ~~(result: Boolean)~~> let previousResult = result
+             var currentResult  = false
+             displayLetters(fontSize) ~~(result: Boolean)~~> [
+               let previousResult = result
+               let currentResult  = result
+             ]
+
              [
+               while(previousResult == currentResult)
                if previousResult then let fontSize -= 1 else let fontSize += 1
-               displayLetters(fontSize) ~~(result: Boolean)~~> while(result == previousResult)
+               displayLetters(fontSize) ~~(result: Boolean)~~> [
+                 let previousResult = currentResult
+                 let currentResult  = result
+               ]
              ]
              
              var correctGuesses: List[Int] = Nil
