@@ -2,6 +2,9 @@ package eyetest.strategy
 
 /** A strategy for the test */
 trait Strategy {
+ 
+  private var _guesses: List[(Int, Boolean)] = Nil
+  def guesses = _guesses
 
   /** Initial font to be used for the test */
   def initialFont(previousTestResult: Double): Int
@@ -10,7 +13,8 @@ trait Strategy {
   def isFinished: Boolean
 
   /** Update the strategy with the latest guess data */
-  def update(font: Int, guessed: Boolean): Unit
+  def update(font: Int, guessed: Boolean): Unit =
+    _guesses ::= font -> guessed
 
   /** Next font to be displayed to the user */
   def nextFont: Int
