@@ -12,13 +12,16 @@ import subscript.swing.Scripts._
 import eyetest.util._
 import eyetest.util.Predef._
 
+import eyetest.strategy._
 
-class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends Frame with FrameProcess {
+
+class Test(username: String, previousScoreRight: Double, previousScoreLeft: Double, maxCorrectGuesses: Int) extends Frame with FrameProcess {
 
   title       = s"Test for $username"
   location    = new Point    (300, 100)
   minimumSize = new Dimension(550, 350)
 
+  var strategy: Strategy = null
 
   val testArea    = new Label("Hello World!")
   val answerField = new TextField("")
@@ -51,36 +54,39 @@ class Test(username: String, initialFont: Int, maxCorrectGuesses: Int) extends F
                                let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
                                sleep: 250  // So that if the user already holds Enter after the previous checkup, he has time to release it
                                Key.Enter
-                               doTest ~~(result: Double)~~> success: result
+                               doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft) ~~(result: Double)~~> success: result
 
-    doTest = var fontSize = initialFont
+    doTest(previousFont: Double) =
+      let strategy = Strategy.simple()
+      var fontSize = strategy.initialFont(previousFont)
 
-             var previousResult = false
-             var currentResult  = false
-             displayLetters(fontSize) ~~(result: Boolean)~~> [
-               let previousResult = result
-               let currentResult  = result
-             ]
+      var previousResult = false
+      var currentResult  = false
+      displayLetters(fontSize) ~~(result: Boolean)~~> [
+       let previousResult = result
+       let currentResult  = result
+      ]
 
-             [
-               while(previousResult == currentResult)
-               if previousResult then let fontSize -= 1 else let fontSize += 1
-               displayLetters(fontSize) ~~(result: Boolean)~~> [
-                 let previousResult = currentResult
-                 let currentResult  = result
-               ]
-             ]
-             
-             var correctGuesses: List[Int] = Nil
-             [
-               while(correctGuesses.size < maxCorrectGuesses) 
-               displayLetters(fontSize) ~~(result: Boolean)~~> [if result then [
-                 let correctGuesses ::= fontSize
-                 let fontSize -= 1
-               ] else let fontSize += 1]
-             ]
+      // Calibrating: get fontSize to the point where the user has hard times recognizing it
+      [
+        while(previousResult == currentResult)
+        if previousResult then let fontSize -= 1 else let fontSize += 1
+        displayLetters(fontSize) ~~(result: Boolean)~~> [
+          let previousResult = currentResult
+          let currentResult  = result
+        ]
+      ]
 
-             success: (correctGuesses.sum / correctGuesses.size.toDouble)
+      // Testing
+      [
+        while(!strategy.isFinished) 
+        displayLetters(fontSize) ~~(result: Boolean)~~> [
+          strategy.update(fontSize, result)
+          let fontSize = strategy.nextFont
+        ]
+      ]
+
+      success: strategy.success
              
 
     displayLetters(font: Int) = let answerField.text = ""
