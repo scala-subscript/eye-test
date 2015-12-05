@@ -17,5 +17,5 @@ project/plugins/project/
 .worksheet
 
 # Derby
-/eyetest-db/
+/eyetest-db*/
 /derby.log
