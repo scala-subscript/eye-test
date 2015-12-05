@@ -57,7 +57,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
                                doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft) ~~(result: Double)~~> success: result
 
     doTest(previousFont: Double) =
-      let strategy = Strategy.batch()
+      let strategy = Strategy.simple()
       var fontSize = strategy.initialFont(previousFont)
 
       var previousResult = false

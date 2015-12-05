@@ -6,9 +6,9 @@ package eyetest.strategy
  * much less then they can actually see. This lucky guess can
  * affect average of all the correct guesses greatly.
  */
-class SimpleStrategy(val maxCorrectGuesses: Int) extends Strategy {
+class SimpleStrategy(val maxCorrectGuesses: Int, val defaultFont: Int = 20) extends Strategy {
 
-  def initialFont(prev: Double) = prev.toInt
+  def initialFont(prev: Double) = defaultFont
 
   // Finished when there are maxCorrectGuesses correct guesses
   def isFinished: Boolean =
