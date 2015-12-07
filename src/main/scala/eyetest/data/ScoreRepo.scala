@@ -4,8 +4,10 @@ import subscript.language
 
 import java.util.Date
 
+import subscript.Predef._
+import subscript.objectalgebra._
+
 import eyetest.util._
-import eyetest.util.Predef._
 
 trait ScoreRepo {
 

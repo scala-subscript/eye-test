@@ -5,8 +5,8 @@ import subscript.language
 
 import java.util.Date
 
-import eyetest.util._
-import eyetest.util.Predef._
+import subscript.Predef._
+import subscript.SubScriptApplication
 
 import eyetest.app._
 import eyetest.data._

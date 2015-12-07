@@ -7,10 +7,12 @@ import java.awt.{Point, Dimension}
 import scala.swing._
 import scala.swing.BorderPanel.Position._
 import scala.swing.event._
+
+import subscript.Predef._
+import subscript.objectalgebra._
 import subscript.swing.Scripts._
 
 import eyetest.util._
-import eyetest.util.Predef._
 
 import eyetest.strategy._
 

@@ -11,11 +11,12 @@ import java.awt.Point
 import scala.swing._
 import scala.swing.BorderPanel.Position._
 
+import subscript.Predef._
+import subscript.objectalgebra._
 import subscript.swing.Scripts._
 
 import eyetest.data._
 import eyetest.util._
-import eyetest.util.Predef._
 
 import org.apache.commons.io.FileUtils
 

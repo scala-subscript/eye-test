@@ -8,10 +8,11 @@ import java.awt.{Point, Font}
 import scala.swing._
 import scala.swing.BorderPanel.Position._
 
+import subscript.Predef._
+import subscript.objectalgebra._
 import subscript.swing.Scripts._
 
 import eyetest.util._
-import eyetest.util.Predef._
 
 class Result(rightEye: Double, leftEye: Double) extends Frame with FrameProcess {
 

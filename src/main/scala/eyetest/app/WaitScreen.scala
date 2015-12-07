@@ -9,10 +9,11 @@ import scala.swing._
 import scala.swing.event.Key
 import scala.swing.BorderPanel.Position._
 
+import subscript.Predef._
+import subscript.objectalgebra._
 import subscript.swing.Scripts._
 
 import eyetest.util._
-import eyetest.util.Predef._
 
 
 class WaitScreen extends Frame with FrameProcess {  

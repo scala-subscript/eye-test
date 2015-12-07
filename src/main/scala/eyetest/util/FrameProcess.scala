@@ -4,9 +4,9 @@ import subscript.language
 
 import scala.swing.event._
 
+import subscript.Predef._
+import subscript.objectalgebra._
 import subscript.swing.Scripts._
-
-import eyetest.util.Predef._
 
 
 trait FrameProcess extends scala.swing.Frame with SSProcess {

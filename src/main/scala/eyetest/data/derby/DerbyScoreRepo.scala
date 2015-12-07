@@ -2,7 +2,8 @@ package eyetest.data
 package derby
 
 import subscript.language
-import eyetest.util.Predef._
+
+import subscript.Predef._
 
 import java.sql._
 

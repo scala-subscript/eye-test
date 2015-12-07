@@ -3,7 +3,8 @@ package eyetest.data
 import subscript.language
 
 import eyetest.util._
-import eyetest.util.Predef._
+
+import subscript.objectalgebra._
 
 trait UserRepo extends SSProcess {
 
