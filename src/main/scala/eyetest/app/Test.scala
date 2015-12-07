@@ -44,19 +44,19 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
 
 
   script..
-    live = mainTestProcess || cancelBtn
+    live = mainTestProcess^ || cancelBtn
 
     mainTestProcess = var rightEye: Double = 0
                       var leftEye : Double = 0
                       eyeTest("Right") ~~(result: Double)~~> let rightEye = result
                       eyeTest("Left" ) ~~(result: Double)~~> let leftEye  = result
-                      success: (rightEye, leftEye)
+                      ^(rightEye, leftEye)
 
     eyeTest(eyeName: String) = let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, 20)
                                let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
                                sleep: 250  // So that if the user already holds Enter after the previous checkup, he has time to release it
                                Key.Enter
-                               doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft) ~~(result: Double)~~> success: result
+                               doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft)^
 
     doTest(previousFont: Double) =
       let strategy = Strategy.batch()
@@ -88,7 +88,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
         ]
       ]
 
-      success: strategy.success
+      ^strategy.success
              
 
     displayLetters(font: Int) = let answerField.text = ""
@@ -98,7 +98,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
                                 Key.Enter
                                 var answer = answerField.text
                                 println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + font)
-                                if sample.mkString == answer then success: true else success: false
+                                if sample.mkString == answer then ^true else ^false
 
 
 }
