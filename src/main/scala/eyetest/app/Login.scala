@@ -97,6 +97,6 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
     ]]
 
     selectFile = val chooser = new FileChooser
-                 if chooser.showSaveDialog(null) == FileChooser.Result.Approve then success: chooser.selectedFile
+                 if chooser.showSaveDialog(null) == FileChooser.Result.Approve then ^chooser.selectedFile
 
 }
