@@ -27,7 +27,7 @@ class DerbyScoreRepo(val conn: Connection) extends ScoreRepo {
                              !}
 
                              let pstmt.close()
-                             success: result
+                             ^result
 
     write(user: String, score: (Double, Double)) = val pstmt = conn.prepareStatement(writeStmt)
                                                    {!

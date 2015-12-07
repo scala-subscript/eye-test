@@ -19,7 +19,7 @@ class DerbyUserRepo(val conn: Connection) extends UserRepo {
           !}
 
           let stmt.close()
-          success: result
+          ^result
 
     write(username: String) = val pstmt = conn.prepareStatement("INSERT INTO USERS VALUES (?)")
                               {!

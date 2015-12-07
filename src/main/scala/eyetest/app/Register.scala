@@ -34,5 +34,5 @@ class Register extends Frame with FrameProcess {
 
   script..
     live = registerBtn + Key.Enter
-           success: usernameField.text
+           ^usernameField.text
 }
