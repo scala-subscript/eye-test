@@ -22,7 +22,6 @@ trait FrameProcess extends scala.swing.Frame with SSProcess {
   override script lifecycle = @{there.onDeactivate(close())}: workflow^ / closed
 
   script workflow = let visible = true
-                    [super.lifecycle ~~(r: Any)~~> ^r
-                                   +~/~(null  )~~> [+]]^
+                    super.lifecycle^
 
 }
