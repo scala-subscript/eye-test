@@ -46,11 +46,8 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
   script..
     live = mainTestProcess^ || cancelBtn
 
-    mainTestProcess = var rightEye: Double = 0
-                      var leftEye : Double = 0
-                      eyeTest("Right") ~~(result: Double)~~> let rightEye = result
-                      eyeTest("Left" ) ~~(result: Double)~~> let leftEye  = result
-                      ^(rightEye, leftEye)
+    mainTestProcess = eyeTest("Right")^^1
+                      eyeTest("Left" )^^2
 
     eyeTest(eyeName: String) = let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, 20)
                                let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
@@ -98,7 +95,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
                                 Key.Enter
                                 var answer = answerField.text
                                 println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + font)
-                                if sample.mkString == answer then ^true else ^false
+                                ^(sample.mkString == answer)
 
 
 }
