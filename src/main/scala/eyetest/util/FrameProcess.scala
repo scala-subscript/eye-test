@@ -19,9 +19,7 @@ trait FrameProcess extends scala.swing.Frame with SSProcess {
 
   implicit script vkey(??k: Key.Value) = vkey2: this, ??k
 
-  override script lifecycle = @{there.onDeactivate(close())}: workflow^ / closed
-
-  script workflow = let visible = true
-                    super.lifecycle^
+  override script lifecycle =
+    @{visible=true; there.onDeactivate(close())}: super.lifecycle^ / closed
 
 }
