@@ -59,30 +59,20 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
       let strategy = Strategy.batch()
       var fontSize = strategy.initialFont(previousFont)
 
-      var previousResult = false
-      var currentResult  = false
-      displayLetters(fontSize) ~~(result: Boolean)~~> [
-       let previousResult = result
-       let currentResult  = result
-      ]
+      var firstResult = false
+      displayLetters(fontSize) ~~(result: Boolean)~~> let firstResult = result
 
       // Calibrating: get fontSize to the point where the user has hard times recognizing it
       [
-        while(previousResult == currentResult)
-        if previousResult then let fontSize -= strategy.calibrationStep else let fontSize += strategy.calibrationStep
-        displayLetters(fontSize) ~~(result: Boolean)~~> [
-          let previousResult = currentResult
-          let currentResult  = result
-        ]
+        if firstResult then let fontSize -= strategy.calibrationStep else let fontSize += strategy.calibrationStep
+        displayLetters(fontSize) ~~(result: Boolean)~~> while(result == firstResult)
       ]
 
       // Testing
       [
         while(!strategy.isFinished) 
-        displayLetters(fontSize) ~~(result: Boolean)~~> [
-          strategy.update(fontSize, result)
-          let fontSize = strategy.nextFont
-        ]
+        displayLetters(fontSize) ~~(result: Boolean)~~> strategy.update(fontSize, result)
+        let fontSize = strategy.nextFont
       ]
 
       ^strategy.success
