@@ -18,8 +18,8 @@ object Main extends SubScriptApplication {
     live = var repos: Repositories = null
            
            initGui
-           (new WaitScreen) || initData(?repos)
-           (new Login(repos))
+           new WaitScreen || initData(?repos)
+           new Login(repos)
 
            let repos.close()
 
