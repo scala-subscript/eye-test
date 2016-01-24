@@ -79,6 +79,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                  repositories.score.write: currentUser, (right, left)
                  new Result(right, left)
                ]
+              +~~(null)~~> [+]
 
              let visible = true
 
