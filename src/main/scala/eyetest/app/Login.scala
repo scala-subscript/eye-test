@@ -66,9 +66,11 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     controls = controlsIter ...
 
-    controlsIter = + [guard: userComboBox, {() => userComboBox.peer.getSelectedItem != null} testBtn doTest]
+    controlsIter = + [userIsSelected testBtn doTest]
                      [registerBtn doRegister  ]
-                     [serializeBtn doSerialize]
+                     [userIsSelected serializeBtn doSerialize]
+
+    userIsSelected = guard: userComboBox, {() => userComboBox.peer.getSelectedItem != null}
 
     doTest = let visible = false
 
@@ -90,7 +92,8 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                  initUsers
                  let visible = true
 
-    doSerialize = selectFile ~~(file: File)~~> repositories.score.scoresOf: getCurrentUser ~~(scores: Seq[Score])~~> [
+    doSerialize = selectFile ~~(null)~~> [+]
+                            +~~(file: File)~~> repositories.score.scoresOf: getCurrentUser ~~(scores: Seq[Score])~~> [
       val csv = "Date,Right Eye,Left Eye\n" + scores.map {case (right, left, date) =>
         val formated = new java.text.SimpleDateFormat("dd.MM.yyyy").format(date)   // SimpleDateFormat to be abstracted to a separate var as soon as local vars can be used from other local vars' definitions
         s"$formated,$right,$left"}.mkString("\n")
