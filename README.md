@@ -4,26 +4,25 @@ This is an application for the eyesight checkup. It is written with [SubScript](
 
 The application is designed to register the dynamics in your vision acuty. Therefore, it is supposed to be used during an extended period of time, regularly and possibly in same conditions during every examination.
 
-The application aims to measure the smallest font you can read from a distance of 50cm.
+The application aims to measure the smallest font you can read from a constant distance.
 
 ## Testing procedure
 Here follows the conceptual description of the test procedure used in the application:
 
-1. Sit at 50cm from your computer screen.
+1. Sit at ~1 meter from your computer screen.
 2. Your eyes will be tested in order: right eye, then left eye. You need to cover the opposite eye with something while you're taking the test.
-3. A sequence of 6 uppercase letters will appear on the screen, the font of which is 20 Ariel. When you take the test next time, the font will be set to the one you scored during your previous test.
-4. Your goal is to type the letters into the text box properly. Once you've done, press **Enter**.
-5. Another sequence of 6 lettes will appear. If you've guessed the previous one correctly, its font will be one unit smaller then the previous one's. Otherwise, the font will increase by one unit.
-6. This will continue while there's no dynamics in your guesses. That is, while you keep getting it right, or keep getting it wrong all the time.
-7. After there is a dynamics, it means that you've reached the limit of your vision, and it needs to be estimated precisely. So the test will continue untill you score 5 correct answers.
-8. These 5 correct answers' average font is the score of the eye currently been tested.
+3. A sequence of 6 uppercase letters will appear on the screen. Your goal is to type the letters into the text box properly. Once you've done, press **Enter**.
+4. Another sequence of 6 lettes will appear. If you've entered the previous one correctly, its font will be 10 units smaller then the previous one's. Otherwise, the font will increase by 10 units. This is the calibration phase.
+5. This will continue while there's no dynamics in your guesses. That is, while you keep getting it right, or keep getting it wrong all the time.
+6. After there is a dynamics, it means that you've reached the limit of your vision, and it needs to be estimated precisely. So the test will continue untill you score 5 correct answers in a row. In this phase, a correct guess reduces your font size by 1 unit and an incorrect one - increases it by 10 units.
+7. These 5 correct answers' average font is the score of the eye currently been tested.
 
 # Usage
 
 ## Download and launch the application
-1. Clone the repository with `git clone https://github.com/scala-subscript/eye-test.git`
-2. Cd into it with `cd eye-test`
-3. Launch the program with `sbt run`
+1. [Download](https://github.com/scala-subscript/eye-test/releases/download/v1.0.0/eye-test-1.0.0.zip) the latest release
+2. Extract the archive to some folder
+3. Run `eye-test.sh` file
 
 ## Register withing the application
 1. After the program has loaded (it creates (if not exists) and connects to the local database, located in `./eyetest-db folder`), you'll see a *Login Screen* where you can select the user. Initially, there are no users, so you'll need to register one. Press **New user** button.
