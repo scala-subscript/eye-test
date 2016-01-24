@@ -35,9 +35,9 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
     peer.revalidate()
   }
 
-  val testBtn      = new Button("Test")
-  val registerBtn  = new Button("New user")
-  val serializeBtn = new Button("Export to CSV")
+  val testBtn      = new Button("Test"         ) {enabled = false}
+  val registerBtn  = new Button("New user"     ) {enabled = false}
+  val serializeBtn = new Button("Export to CSV") {enabled = false}
 
   val controlsPane = new GridPanel(1, 3) {
     contents += testBtn
@@ -66,7 +66,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     controls = controlsIter ...
 
-    controlsIter = + [testBtn doTest          ]
+    controlsIter = + [guard: userComboBox, {() => userComboBox.peer.getSelectedItem != null} testBtn doTest]
                      [registerBtn doRegister  ]
                      [serializeBtn doSerialize]
 
@@ -85,6 +85,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     doRegister = let visible = false
                  new Register ~~(name: String)~~> repositories.user.write: name
+                             +~~(null)~~> [+]
                  initUsers
                  let visible = true
 

@@ -19,3 +19,6 @@ project/plugins/project/
 # Derby
 /eyetest-db*/
 /derby.log
+
+# Project specific
+/release/
