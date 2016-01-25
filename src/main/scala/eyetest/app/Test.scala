@@ -61,20 +61,17 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
 
       var firstResult = false
       displayLetters(fontSize) ~~(result: Boolean)~~> let firstResult = result
-                             +~/~(null)~~> break
 
       // Calibrating: get fontSize to the point where the user has hard times recognizing it
       [
         if firstResult then let fontSize -= strategy.calibrationStep else let fontSize += strategy.calibrationStep
         displayLetters(fontSize) ~~(result: Boolean)~~> while(result == firstResult)
-                               +~/~(null)~~> break
       ]
 
       // Testing
       [
         while(!strategy.isFinished) 
         displayLetters(fontSize) ~~(result: Boolean)~~> strategy.update(fontSize, result)
-                               +~/~(null)~~> break
         let fontSize = strategy.nextFont
       ]
 
