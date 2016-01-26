@@ -1,6 +1,6 @@
 scalaVersion := "2.11.7"
 
-version := "1.0.0"
+version := "1.0.1"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
