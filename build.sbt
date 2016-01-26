@@ -5,7 +5,7 @@ version := "1.0.0"
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
-  "org.subscript-lang" %% "subscript-swing" % "3.0.0-SNAPSHOT"
+  "org.subscript-lang" %% "subscript-swing" % "3.0.1"
 , "commons-io" % "commons-io" % "2.4"
 , "org.apache.derby" % "derby" % "10.12.1.1"
 )
