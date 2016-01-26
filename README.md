@@ -20,7 +20,7 @@ Here follows the conceptual description of the test procedure used in the applic
 # Usage
 
 ## Download and launch the application
-1. [Download](https://github.com/scala-subscript/eye-test/releases/download/v1.0.0/eye-test-1.0.0.zip) the latest release
+1. [Download](https://github.com/scala-subscript/eye-test/releases/download/v1.0.0/eye-test-1.0.1.zip) the latest release
 2. Extract the archive to some folder
 3. Run `eye-test.sh` file
 
