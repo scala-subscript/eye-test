@@ -22,7 +22,7 @@ Here follows the conceptual description of the test procedure used in the applic
 ## Download and launch the application
 1. [Download](https://github.com/scala-subscript/eye-test/releases/download/v1.0.0/eye-test-1.0.1.zip) the latest release
 2. Extract the archive to some folder
-3. Run `eye-test.sh` file
+3. Run `eye-test.sh` (Mac OS X and Linux) or `eye-test.bat` (Windows)
 
 ## Register withing the application
 1. After the program has loaded (it creates (if not exists) and connects to the local database, located in `./eyetest-db folder`), you'll see a *Login Screen* where you can select the user. Initially, there are no users, so you'll need to register one. Press **New user** button.
