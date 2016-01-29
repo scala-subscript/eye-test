@@ -58,12 +58,9 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
     doTest(previousFont: Double) =
       let strategy    = Strategy.batch()
       var fontSize    = strategy.initialFont(previousFont)
-      var firstResult = false
-
-      displayLetters: fontSize ~~(result: Boolean)~~> let firstResult = result
 
       println: "Calibrating" // get fontSize to the point where the user has hard times recognizing it
-      [
+      displayLetters: fontSize ~~(firstResult: Boolean)~~> [
         if firstResult then let fontSize -= strategy.calibrationStep
                        else let fontSize += strategy.calibrationStep
         displayLetters: fontSize ~~(result: Boolean)~~> while (result==firstResult)
