@@ -70,13 +70,13 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
     doTest = let visible = false
 
              ^getCurrentUser
-               ~~(null)~~> [+-]
-              +~~(currentUser: String)~~> [
+               ~~(currentUser: String)~~> [
                  repositories.score.last: currentUser
                  ~~(Some((right:Double, left:Double,_)))~~> new Test(currentUser, right, left, 5)
                 +~~(None                               )~~> new Test(currentUser, 20   , 20  , 5)
                ]
-               ~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
+               ~~(null)~~> [+-]
+              +~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
                                                     new Result(right, left)
                                                   ]
              let visible = true

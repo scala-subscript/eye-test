@@ -60,9 +60,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
       var fontSize    = strategy.initialFont(previousFont)
       var firstResult = false
 
-      displayLetters: fontSize
-
-      ~~(firstResult: Boolean)~~>
+      displayLetters: fontSize ~~(result: Boolean)~~> let firstResult = result
 
       println: "Calibrating" // get fontSize to the point where the user has hard times recognizing it
       [
