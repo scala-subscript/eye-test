@@ -44,7 +44,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
 
 
   script..
-    live = mainTestProcess^ || cancelBtn
+    live = mainTestProcess^ / cancelBtn
 
     mainTestProcess = eyeTest("Right")^^1
                       eyeTest("Left" )^^2
@@ -53,25 +53,28 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
                                let testArea.text = s"Look with your $eyeName eye. Press Enter when ready."
                                sleep: 250  // So that if the user already holds Enter after the previous checkup, he has time to release it
                                Key.Enter
-                               doTest(if (eyeName == "Right") previousScoreRight else previousScoreLeft)^
+                               doTest( if(eyeName=="Right") previousScoreRight else previousScoreLeft )^
 
     doTest(previousFont: Double) =
-      let strategy = Strategy.batch()
-      var fontSize = strategy.initialFont(previousFont)
-
+      let strategy    = Strategy.batch()
+      var fontSize    = strategy.initialFont(previousFont)
       var firstResult = false
-      displayLetters(fontSize) ~~(result: Boolean)~~> let firstResult = result
 
-      // Calibrating: get fontSize to the point where the user has hard times recognizing it
+      displayLetters: fontSize
+
+      ~~(firstResult: Boolean)~~>
+
+      println: "Calibrating" // get fontSize to the point where the user has hard times recognizing it
       [
-        if firstResult then let fontSize -= strategy.calibrationStep else let fontSize += strategy.calibrationStep
-        displayLetters(fontSize) ~~(result: Boolean)~~> while(result == firstResult)
+        if firstResult then let fontSize -= strategy.calibrationStep
+                       else let fontSize += strategy.calibrationStep
+        displayLetters: fontSize ~~(result: Boolean)~~> while (result==firstResult)
       ]
 
-      // Testing
+      println: "Testing"
       [
-        while(!strategy.isFinished) 
-        displayLetters(fontSize) ~~(result: Boolean)~~> strategy.update(fontSize, result)
+        while(!strategy.isFinished)
+        displayLetters: fontSize ~~(result: Boolean)~~> strategy.update: fontSize, result
         let fontSize = strategy.nextFont
       ]
 
@@ -80,10 +83,10 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
 
     displayLetters(font: Int) = let answerField.text = ""
                                 let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, font)
-                                var sample = scala.util.Random.alphanumeric.filter(c => c >= 'A' && c <= 'Z').take(6)
+                                var sample = scala.util.Random.alphanumeric.filter(c => c.isUpper).take(6)
                                 let testArea.text = sample.mkString(" ")
                                 Key.Enter
-                                var answer = answerField.text
+                                var answer = answerField.text.toUpperCase
                                 println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + font)
                                 ^(sample.mkString == answer)
 
