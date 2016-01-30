@@ -24,7 +24,7 @@ class DerbyScoreRepo(val conn: Connection) extends ScoreRepo {
                                          def dbl(name: String) = resultSet.getDouble(name)
                                          while(resultSet.next()) result ::= ((dbl(Col.RIGHT_EYE),
                                                                               dbl(Col. LEFT_EYE), resultSet.getTimestamp(Col.DATE)))}
-                                //catch   {case t:Throwable => t.printStackTrace()}
+                                catch   {case t:Throwable => t.printStackTrace()}: PartialFunction[Throwable, Unit]
                                 finally {pstmt.close()}
                                 result
                              *}
@@ -35,7 +35,7 @@ class DerbyScoreRepo(val conn: Connection) extends ScoreRepo {
                                        pstmt.setDouble(2, score._1)
                                        pstmt.setDouble(3, score._2)
                                        try     {pstmt.executeUpdate()}
-                                       //catch   {case e:Throwable => e.printStackTrace()}
+                                       catch   {case e:Throwable => e.printStackTrace()}: PartialFunction[Throwable, Unit]
                                        finally {pstmt.close()}
                                     *}
 
