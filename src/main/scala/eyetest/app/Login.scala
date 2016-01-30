@@ -75,7 +75,7 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                  ~~(Some((right:Double, left:Double,_)))~~> new Test(currentUser, right, left, 5)
                 +~~(None                               )~~> new Test(currentUser, 20   , 20  , 5)
                ]
-               ~~(null)~~> [+-]
+               ~~(null)~~> []
               +~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
                                                     new Result(right, left)
                                                   ]
@@ -83,12 +83,12 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
 
     doRegister = let visible = false
-                 new Register ~~(name: String)~~> repositories.user.write: name
-                             +~~(null)~~> [+]
+                 new Register ~~(name: String)~~> [repositories.user.write: name]
+                             +~~(null)~~> []
                  initUsers
                  let visible = true
 
-    doSerialize = selectFile ~~(null)~~> [+]
+    doSerialize = selectFile ~~(null)~~> []
                             +~~(file: File)~~> repositories.score.scoresOf: getCurrentUser
                              ~~(scores: Seq[Score])~~> [val header = "Date,Right Eye,Left Eye\n"
                                                         val csv = scores.map {case (right, left, date) =>
