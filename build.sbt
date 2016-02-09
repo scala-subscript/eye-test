@@ -1,11 +1,13 @@
 scalaVersion := "2.11.7"
 
-version := "1.0.1"
+version := "1.0.2"
+
+assemblyJarName in assembly := "eye-test.jar"
 
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies ++= Seq(
-  "org.subscript-lang" %% "subscript-swing" % "3.0.1-SNAPSHOT"
+  "org.subscript-lang" %% "subscript-swing" % "3.0.2"
 , "commons-io" % "commons-io" % "2.4"
 , "org.apache.derby" % "derby" % "10.12.1.1"
 )

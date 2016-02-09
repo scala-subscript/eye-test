@@ -1,0 +1,9 @@
+# Args
+VERSION="$1"
+CONTENTS="target/scala-2.11/*.jar distribution/eye-test.bat distribution/eye-test.sh"
+
+# Prepare
+rm -r distribution/*.zip
+
+# Do the work
+zip -j -r "distribution/eyetest-$VERSION.zip" $CONTENTS
