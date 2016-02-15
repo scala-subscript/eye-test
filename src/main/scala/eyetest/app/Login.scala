@@ -68,42 +68,46 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     userIsSelected = guard: userComboBox, (userComboBox.peer.getSelectedItem != null)
 
-    doTest = let visible = false
+    doInvisibly(s: subscript.vm.ScriptNode[Any]) = let visible=false; s^; let visible=true
 
-             ^getCurrentUser
-               ~~(currentUser: String)~~> [
-                 repositories.score.last: currentUser
-                 ~~(Some((right:Double, left:Double,_)))~~> new Test(currentUser, right, left, 5)
-                +~~(None                               )~~> new Test(currentUser, 20   , 20  , 5)
-               ]
-               ~~(null)~~> []
-              +~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
-                                                    new Result(right, left)
-                                                  ]
-             let visible = true
+    doTest = doInvisibly: [
+
+               ^getCurrentUser
+                 ~~(currentUser: String)~~> [
+                   repositories.score.last: currentUser
+                   ~~(Some((right:Double, left:Double,_)))~~> new Test(currentUser, right, left, 5)
+                  +~~(None                               )~~> new Test(currentUser, 20   , 20  , 5)
+                 ]
+                 ~~(null)~~> []
+                +~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
+                                                      new Result(right, left)
+                                                    ]
+             ]
 
 
-    doRegister = let visible = false
-                 new Register ~~(name: String)~~> [repositories.user.write: name]
-                             +~~(null)~~> []
-                 initUsers
-                 let visible = true
+    doRegister = doInvisibly: [
+                   new Register ~~(name: String)~~> [repositories.user.write: name; initUsers]
+                               +~~(null)~~>[]
+                 ]
 
-    doSerialize = selectFile ~~(null)~~> []
-                            +~~(file: File)~~> repositories.score.scoresOf: getCurrentUser
-                             ~~(scores: Seq[Score])~~> [val header = "Date,Right Eye,Left Eye\n"
-                                                        val csv = scores.map {case (right, left, date) =>
-                                                          // SimpleDateFormat to be abstracted to a separate var as soon as
-                                                          // local vars can be used from other local vars' definitions
-                                                          val dateStr = new java.text.SimpleDateFormat("dd.MM.yyyy").format(date)
-                                                          s"$dateStr,$right,$left"
-                                                        }.mkString("\n")
-                                                        FileUtils.write: file, (header+csv)
-                                                       ]
+    doSerialize = selectFile
+                 ~~(null)~~> []
+                +~~(file  : File      )~~> repositories.score.scoresOf: getCurrentUser
+                 ~~(scores: Seq[Score])~~> [val header = "Date,Right Eye,Left Eye\n"
+                                            val csv = scores.map {
+                                              case (right, left, date) =>
+                                                // SimpleDateFormat to be abstracted to a separate var as soon as
+                                                // local vars can be used from other local vars' definitions
+                                                val dateStr = new java.text.SimpleDateFormat("dd.MM.yyyy").format(date)
+                                                s"$dateStr,$right,$left"
+                                            }.mkString("\n")
+                                            FileUtils.write: file, (header+csv)
+                                           ]
 
-    selectFile = val         chooser = new FileChooser
-                 @gui: [  if chooser.showSaveDialog(null)==FileChooser.Result.Approve
-                       then ^chooser.selectedFile
-                       ]
+    selectFile = val   chooser = new FileChooser
+                 @gui:^chooser.showSaveDialog(null)
+                ~~(FileChooser.Result.Approve)~~>
+                      ^chooser.selectedFile
+               +~~(_)~~>[]
 
 }
