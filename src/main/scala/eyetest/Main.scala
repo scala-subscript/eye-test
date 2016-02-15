@@ -16,8 +16,8 @@ object Main extends SubScriptApplication {
 
   script..
     live = initGui
-           [ new WaitScreen || initData^ ]~~(repos: Repositories)~~>
-           [ new Login(repos); let repos.close()]
+           [ new WaitScreen       || initData^       ]~~(repos: Repositories)~~>
+           [ new MainScreen(repos); let repos.close()]
 
     initGui = javax.swing.UIManager.setLookAndFeel: "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
 

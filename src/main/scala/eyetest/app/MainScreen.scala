@@ -21,7 +21,7 @@ import eyetest.util._
 import org.apache.commons.io.FileUtils
 
 
-class Login(repositories: Repositories) extends Frame with FrameProcess {
+class MainScreen(repositories: Repositories) extends Frame with FrameProcess {
 
   title = "Eye test"
   location = new Point(300, 300)

@@ -20,21 +20,32 @@ class Register extends Frame with FrameProcess {
   location    = new Point(300, 300)
   minimumSize = new Dimension(350, 0)
 
-
   val usernameField = new TextField
   val registerBtn   = new Button("Register")
+  val cancelBtn     = new Button("Cancel")
+
+  val controls    = new GridPanel(2,1) {
+
+    contents +=   cancelBtn
+    contents += registerBtn
+
+    cancelBtn  .enabled = false
+    registerBtn.enabled = false
+  }
 
   contents = new BorderPanel {
     layout(usernameField) = Center
-    layout(registerBtn  ) = South
-    registerBtn.enabled   = false
+    layout(controls     ) = South
   }
 
   listenTo(usernameField.keys)
 
 
   script..
-    live = guard: usernameField, !usernameField.text.trim.isEmpty
-           registerBtn + Key.Enter
-           ^usernameField.text.trim
+
+    live = [ guard: usernameField, !usernameField.text.trim.isEmpty
+             registerBtn + Key.Enter
+             ^usernameField.text.trim
+           ]
+           / cancelBtn
 }
