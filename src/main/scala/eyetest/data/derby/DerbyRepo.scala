@@ -40,7 +40,7 @@ class DerbyRepo(dbname: String) extends Repositories {
     conn .close()
   }
 
-  override def user  = new DerbyUserRepo (conn)
-  override def score = new DerbyScoreRepo(conn)
+  override def  userRepo = new DerbyUserRepo (conn)
+  override def scoreRepo = new DerbyScoreRepo(conn)
 
 }

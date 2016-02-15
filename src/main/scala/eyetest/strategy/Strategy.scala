@@ -25,6 +25,10 @@ trait Strategy {
   /** Outputs the user's score at the end of the test */
   def success: Double
 
+  def calibrateFontSize(oldSize: Int, goDown: Boolean): Int = {
+    if (goDown) Math.max(  5, oldSize - calibrationStep)
+    else        Math.min(200, oldSize + calibrationStep)
+  }
 }
 
 object Strategy {

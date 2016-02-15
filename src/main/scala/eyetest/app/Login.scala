@@ -60,39 +60,33 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
     live      = initUsers; controlAction...
 
-    initUsers = repositories.user ~~(users: Seq[String])~~> setUsers: users
+    initUsers = repositories.userRepo ~~(users: Seq[String])~~> setUsers: users
 
-    controlAction =;+ userIsSelected      testBtn doTest
+    controlAction =;+ userIsSelected      testBtn doInvisibly: doTest
                       userIsSelected serializeBtn doSerialize
-                                      registerBtn doRegister
+                                      registerBtn doInvisibly: doRegister
 
     userIsSelected = guard: userComboBox, (userComboBox.peer.getSelectedItem != null)
 
     doInvisibly(s: subscript.vm.ScriptNode[Any]) = let visible=false; s^; let visible=true
 
-    doTest = doInvisibly: [
-
-               ^getCurrentUser
+    doTest =  ^getCurrentUser
                  ~~(currentUser: String)~~> [
-                   repositories.score.last: currentUser
+                   repositories.scoreRepo.last: currentUser
                    ~~(Some((right:Double, left:Double,_)))~~> new Test(currentUser, right, left, 5)
                   +~~(None                               )~~> new Test(currentUser, 20   , 20  , 5)
                  ]
                  ~~(null)~~> []
-                +~~((right:Double, left:Double))~~> [ repositories.score.write: currentUser, (right, left)
+                +~~((right:Double, left:Double))~~> [ repositories.scoreRepo.write: currentUser, (right, left)
                                                       new Result(right, left)
                                                     ]
-             ]
 
-
-    doRegister = doInvisibly: [
-                   new Register ~~(name: String)~~> [repositories.user.write: name; initUsers]
-                               +~~(null)~~>[]
-                 ]
+    doRegister = new Register ~~(name: String)~~> [repositories.userRepo.write: name; initUsers]
+                             +~~(null)~~>[]
 
     doSerialize = selectFile
                  ~~(null)~~> []
-                +~~(file  : File      )~~> repositories.score.scoresOf: getCurrentUser
+                +~~(file  : File      )~~> repositories.scoreRepo.scoresOf: getCurrentUser
                  ~~(scores: Seq[Score])~~> [val header = "Date,Right Eye,Left Eye\n"
                                             val csv = scores.map {
                                               case (right, left, date) =>

@@ -32,6 +32,9 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
   val controls = new GridPanel(2, 1) {
     contents += answerField
     contents += cancelBtn
+
+    answerField.font = answerField.font.deriveFont(44f)
+    cancelBtn  .font = cancelBtn  .font.deriveFont(36f)
   }
 
 
@@ -61,8 +64,7 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
 
       println: "Calibrating" // get fontSize to the point where the user has hard times recognizing it
       displayLetters: fontSize ~~(firstResult: Boolean)~~> [
-        if firstResult then let fontSize -= strategy.calibrationStep
-                       else let fontSize += strategy.calibrationStep
+        let fontSize = strategy.calibrateFontSize(fontSize, firstResult)
         displayLetters: fontSize ~~(result: Boolean)~~> while (result==firstResult)
       ]
 
@@ -76,14 +78,14 @@ class Test(username: String, previousScoreRight: Double, previousScoreLeft: Doub
       ^strategy.success
              
 
-    displayLetters(font: Int) = let answerField.text = ""
-                                let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, font)
-                                var sample = scala.util.Random.alphanumeric.filter(c => c.isUpper).take(6)
-                                let testArea.text = sample.mkString(" ")
-                                Key.Enter
-                                var answer = answerField.text.toUpperCase
-                                println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + font)
-                                ^(sample.mkString == answer)
+    displayLetters(fontSize: Int) = let answerField.text = ""
+                                    let testArea.font = new Font("Ariel", java.awt.Font.PLAIN, fontSize)
+                                    var sample = scala.util.Random.alphanumeric.filter(c => c.isUpper).take(6)
+                                    let testArea.text = sample.mkString(" ")
+                                    Key.Enter
+                                    var answer = answerField.text.toUpperCase
+                                    println("Answer: " + answer + "; Correct: " + sample.mkString + "; Font: " + fontSize)
+                                    ^(sample.mkString == answer)
 
 
 }
