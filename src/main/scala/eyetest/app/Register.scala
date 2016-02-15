@@ -27,12 +27,14 @@ class Register extends Frame with FrameProcess {
   contents = new BorderPanel {
     layout(usernameField) = Center
     layout(registerBtn  ) = South
+    registerBtn.enabled   = false
   }
 
   listenTo(usernameField.keys)
 
 
   script..
-    live = registerBtn + Key.Enter
-           ^usernameField.text
+    live = guard: usernameField, !usernameField.text.trim.isEmpty
+           registerBtn + Key.Enter
+           ^usernameField.text.trim
 }

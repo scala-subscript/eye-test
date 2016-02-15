@@ -57,15 +57,16 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
 
 
   script..
+
     live      = initUsers; controlAction...
 
     initUsers = repositories.user ~~(users: Seq[String])~~> setUsers: users
 
-    controlAction = + [userIsSelected testBtn doTest]
-                      [registerBtn doRegister  ]
-                      [userIsSelected serializeBtn doSerialize]
+    controlAction =;+ userIsSelected      testBtn doTest
+                      userIsSelected serializeBtn doSerialize
+                                      registerBtn doRegister
 
-    userIsSelected = guard: userComboBox, {() => userComboBox.peer.getSelectedItem != null}
+    userIsSelected = guard: userComboBox, (userComboBox.peer.getSelectedItem != null)
 
     doTest = let visible = false
 
@@ -100,7 +101,9 @@ class Login(repositories: Repositories) extends Frame with FrameProcess {
                                                         FileUtils.write: file, (header+csv)
                                                        ]
 
-    selectFile = val chooser = new FileChooser
-                 if chooser.showSaveDialog(null)==FileChooser.Result.Approve then ^chooser.selectedFile
+    selectFile = val         chooser = new FileChooser
+                 @gui: [  if chooser.showSaveDialog(null)==FileChooser.Result.Approve
+                       then ^chooser.selectedFile
+                       ]
 
 }

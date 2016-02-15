@@ -15,17 +15,12 @@ import eyetest.data.derby._
 object Main extends SubScriptApplication {
 
   script..
-    live = var repos: Repositories = null
-           
-           initGui
-           new WaitScreen || initData(?repos)
-           new Login(repos)
-
-           let repos.close()
+    live = initGui
+           [ new WaitScreen || initData^ ]~~(repos: Repositories)~~>
+           [ new Login(repos); let repos.close()]
 
     initGui = javax.swing.UIManager.setLookAndFeel: "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
 
-    initData(?repos: Repositories) = let System.setSecurityManager(null)  // SecurityManager interferes with Derby; normally it is not needed
-                                     let repos = new DerbyRepo("eyetest-db")
-
+    initData = let System.setSecurityManager(null)  // SecurityManager interferes with Derby; normally it is not needed
+               ^new DerbyRepo("eyetest-db")
 }
