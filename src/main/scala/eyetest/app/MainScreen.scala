@@ -68,7 +68,7 @@ class MainScreen(repositories: Repositories) extends Frame with FrameProcess {
 
     userIsSelected = guard: userComboBox, (userComboBox.peer.getSelectedItem != null)
 
-    doInvisibly(s: subscript.vm.ScriptNode[Any]) = let visible=false; s^; let visible=true
+    doInvisibly(s: subscript.vm.Script[Any]) = let visible=false; s^; let visible=true
 
     doTest =  ^getCurrentUser
                  ~~(currentUser: String)~~> [
